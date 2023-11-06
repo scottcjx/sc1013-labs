@@ -1,10 +1,6 @@
 name: markdown-autodocs
-
-on:
-  push:
-    branches:    
-      - '**'        # matches every branch
-
+permissions: write-all
+on: [push]
 jobs:        
   auto-update-readme:
       runs-on: ubuntu-latest

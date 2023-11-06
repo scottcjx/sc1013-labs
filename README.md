@@ -11,10 +11,11 @@ code to be used for SC1013 Labs
 #include <MFRC522.h>
 
 // Uncomment this line for part 5.3
-// #define IMPL_LOCK
-#define targetCardID (uint32_t) 0x850A734D
+ #define IMPL_LOCK
+const byte targetCardID[] = {0x90, 0x8F, 0x2A, 0x21};
+//const byte targetCardID[] = {0x21, 0x2A, 0x8F, 0x90};
 
-MFRC552 mfrc522(10, 9);
+MFRC522 mfrc522(10, 9);
 byte cardID[4];
 
 void setup() 
@@ -39,13 +40,13 @@ void loop()
             Serial.print(cardID[i], HEX);
         }
 
-        byte piccType = mfrc522.PICC_GetType(mfrc.uid.sak);
+        byte piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
         Serial.print("\t Type: \t");
         Serial.print(mfrc522.PICC_GetTypeName(piccType));
         Serial.println();
 
         #ifdef IMPL_LOCK
-            if ( *(uint32_t*) cardID[4] == targetCardID)
+            if ( *(uint32_t*) cardID == *(uint32_t*) targetCardID)
             {
                 Serial.println("Correct Card: Unlocked");
             }
